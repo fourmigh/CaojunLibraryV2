@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'org.caojun.library.v2'
-    compileSdk 33
+    compileSdk rootProject.ext.sdk_version
 
     defaultConfig {
         applicationId "org.caojun.library.v2"
         minSdk 21
-        targetSdk 33
+        targetSdk rootProject.ext.sdk_version
         versionCode 1
         versionName "1.0"
 
@@ -37,7 +37,7 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
