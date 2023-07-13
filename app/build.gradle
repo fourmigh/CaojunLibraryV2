@@ -52,4 +52,5 @@ dependencies {
     implementation project(':kotlin')
     implementation project(':assets')
     implementation project(':gson')
+    implementation project(':pinyin')
 }

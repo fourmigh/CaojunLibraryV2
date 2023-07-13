@@ -28,4 +28,10 @@
         android:name="org.caojun.library.v2.fragment.AssetsFragment"
         android:label="@string/menu_assets"
         tools:layout="@layout/fragment_assets" />
+
+    <fragment
+        android:id="@+id/nav_pinyin"
+        android:name="org.caojun.library.v2.fragment.PinyinFragment"
+        android:label="@string/menu_pinyin"
+        tools:layout="@layout/fragment_pinyin" />
 </navigation>
