@@ -34,4 +34,10 @@
         android:name="org.caojun.library.v2.fragment.PinyinFragment"
         android:label="@string/menu_pinyin"
         tools:layout="@layout/fragment_pinyin" />
+
+    <fragment
+        android:id="@+id/nav_countdown_movie"
+        android:name="org.caojun.library.v2.fragment.CountdownMovieFragment"
+        android:label="@string/menu_countdown_movie"
+        tools:layout="@layout/fragment_countdown_movie" />
 </navigation>
