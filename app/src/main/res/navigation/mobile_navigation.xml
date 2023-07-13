@@ -22,4 +22,10 @@
         android:name="org.caojun.library.v2.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_assets"
+        android:name="org.caojun.library.v2.fragment.AssetsFragment"
+        android:label="@string/menu_assets"
+        tools:layout="@layout/fragment_assets" />
 </navigation>

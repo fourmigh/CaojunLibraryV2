@@ -14,3 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "CaojunLibraryV2"
 include ':app'
+include ':assets'
+include ':kotlin'
+include ':gson'

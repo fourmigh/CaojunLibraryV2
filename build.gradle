@@ -3,6 +3,12 @@ buildscript {
     ext {
         sdk_version = 33
     }
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        google()
+        mavenCentral()
+        maven { url 'https://developer.huawei.com/repo/' }
+    }
 }
 
 plugins {

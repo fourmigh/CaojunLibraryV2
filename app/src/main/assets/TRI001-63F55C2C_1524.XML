@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MetricDataFile>
+  <Header>
+    <MachineId>3500001566</MachineId>
+    <MachineName>SAF2</MachineName>
+    <CreationTime>22-Feb-2023 00:05:11</CreationTime>
+    <Description />
+  </Header>
+  <CoinSnapshot>
+    <TotalInNativeCurrency>5865</TotalInNativeCurrency>
+  </CoinSnapshot>
+  <BatterySnapshot>
+    <BatteryVoltage>1351</BatteryVoltage>
+  </BatterySnapshot>
+  <LeftPrinterTicketStock>
+    <TicketsRemaining>0</TicketsRemaining>
+  </LeftPrinterTicketStock>
+</MetricDataFile>
