@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency_code">DEM</string>
+    <string name="currency_number">280</string>
+    <string name="currency_name">德国马克-Deutsche Mark</string>
+    <string name="currency_cro">德国</string>
+</resources>

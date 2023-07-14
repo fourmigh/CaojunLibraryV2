@@ -28,5 +28,9 @@
             android:id="@+id/nav_countdown_movie"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_countdown_movie" />
+        <item
+            android:id="@+id/nav_currency"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_currency" />
     </group>
 </menu>

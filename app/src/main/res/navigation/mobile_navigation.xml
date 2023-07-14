@@ -21,7 +21,8 @@
         android:id="@+id/nav_slideshow"
         android:name="org.caojun.library.v2.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_slideshow" >
+    </fragment>
 
     <fragment
         android:id="@+id/nav_assets"
@@ -40,4 +41,10 @@
         android:name="org.caojun.library.v2.fragment.CountdownMovieFragment"
         android:label="@string/menu_countdown_movie"
         tools:layout="@layout/fragment_countdown_movie" />
+
+    <fragment
+        android:id="@+id/nav_currency"
+        android:name="org.caojun.library.v2.fragment.CurrencyFragment"
+        android:label="@string/menu_currency"
+        tools:layout="@layout/fragment_currency" />
 </navigation>

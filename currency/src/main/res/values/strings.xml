@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency_code">货币代码</string>
+    <string name="currency_number">数字代码</string>
+    <string name="currency_name">货币名称</string>
+    <string name="currency_cro">国家/地区/组织</string>
+</resources>

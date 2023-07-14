@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency_code">HKD</string>
+    <string name="currency_number">344</string>
+    <string name="currency_name">港币-Hong Kong Dollar</string>
+    <string name="currency_cro">中国香港</string>
+</resources>

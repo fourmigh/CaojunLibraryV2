@@ -14,4 +14,5 @@
     <string name="menu_assets">Assets Demo</string>
     <string name="menu_pinyin">Pinyin Demo</string>
     <string name="menu_countdown_movie">CountdownMovie Demo</string>
+    <string name="menu_currency">Currency Demo</string>
 </resources>

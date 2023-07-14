@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency_code">KRW</string>
+    <string name="currency_number">410</string>
+    <string name="currency_name">韩元-South Korean Won</string>
+    <string name="currency_cro">韩国</string>
+</resources>

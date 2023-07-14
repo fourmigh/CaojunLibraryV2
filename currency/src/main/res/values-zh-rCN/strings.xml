@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency_code">CNY</string>
+    <string name="currency_number">156</string>
+    <string name="currency_name">人民币-Chinese Yuan</string>
+    <string name="currency_cro">中国</string>
+</resources>

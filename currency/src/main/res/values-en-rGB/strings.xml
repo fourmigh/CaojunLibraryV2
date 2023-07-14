@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency_code">GBP</string>
+    <string name="currency_number">826</string>
+    <string name="currency_name">英镑-British Pound</string>
+    <string name="currency_cro">英国</string>
+</resources>

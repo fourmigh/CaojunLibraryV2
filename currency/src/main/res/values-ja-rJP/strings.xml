@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency_code">JPY</string>
+    <string name="currency_number">392</string>
+    <string name="currency_name">日元-Japanese Yen</string>
+    <string name="currency_cro">日本</string>
+</resources>

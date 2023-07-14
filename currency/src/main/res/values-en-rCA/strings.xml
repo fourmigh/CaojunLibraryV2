@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency_code">CAD</string>
+    <string name="currency_number">124</string>
+    <string name="currency_name">加元-Canadian Dollar</string>
+    <string name="currency_cro">加拿大</string>
+</resources>

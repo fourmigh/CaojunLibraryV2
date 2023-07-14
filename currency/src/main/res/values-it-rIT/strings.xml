@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency_code">ITL</string>
+    <string name="currency_number">380</string>
+    <string name="currency_name">意大利里拉-Italian Lira</string>
+    <string name="currency_cro">意大利</string>
+</resources>

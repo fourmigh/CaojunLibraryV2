@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency_code">AUD</string>
+    <string name="currency_number">36</string>
+    <string name="currency_name">澳元-Australia Dollar</string>
+    <string name="currency_cro">澳大利亚</string>
+</resources>

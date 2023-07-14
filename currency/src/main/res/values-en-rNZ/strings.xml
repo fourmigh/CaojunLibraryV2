@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency_code">NZD</string>
+    <string name="currency_number">554</string>
+    <string name="currency_name">新西兰元-New Zealand Dollar</string>
+    <string name="currency_cro">新西兰</string>
+</resources>
