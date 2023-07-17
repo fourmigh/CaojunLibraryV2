@@ -3,7 +3,7 @@ package org.caojun.library.currency
 import android.content.Context
 import java.math.BigDecimal
 import java.text.DecimalFormat
-import java.util.*
+import java.util.Locale
 
 /**
  * currentName: 人民币-Chinese Yuan
@@ -78,10 +78,10 @@ object Currency {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    val numbers = arrayOf(124, 156, 250, 280, 380, 392, 410, 826, 840, 901)
+    val numberCodes = arrayOf(124, 156, 250, 280, 380, 392, 410, 826, 840, 901)
 
-    fun number2Locale(number: Int = 156): Locale {
-        return when (number) {
+    fun numberCode2Locale(numberCode: Int = 156): Locale {
+        return when (numberCode) {
             250 -> Locale.FRANCE
             280 -> Locale.GERMANY
             380 -> Locale.ITALY
@@ -107,23 +107,23 @@ object Currency {
     fun code(locale: Locale = Locale.getDefault()): String {
         return getCurrency(locale)?.currencyCode ?: ""
     }
-    fun code(number: Int = 156): String {
-        val locale = number2Locale(number)
+    fun code(numberCode: Int = 156): String {
+        val locale = numberCode2Locale(numberCode)
         return code(locale)
     }
 
     fun displayName(locale: Locale = Locale.getDefault()): String {
         return getCurrency(locale)?.displayName ?: ""
     }
-    fun displayName(number: Int): String {
-        return displayName(number2Locale(number))
+    fun displayName(numberCode: Int): String {
+        return displayName(numberCode2Locale(numberCode))
     }
 
     fun symbol(locale: Locale = Locale.getDefault()): String {
         return getCurrency(locale)?.symbol ?: ""
     }
-    fun symbol(number: Int): String {
-        return symbol(number2Locale(number))
+    fun symbol(numberCode: Int): String {
+        return symbol(numberCode2Locale(numberCode))
     }
 
     fun subtype(locale: Locale = Locale.getDefault()): String {
@@ -147,11 +147,27 @@ object Currency {
      */
     fun formatAmount(amount: Int, locale: Locale): String {
         val formatter = DecimalFormat.getInstance(locale)
-        val result = formatter.format(amount.toDouble() / 100 + 0.001)
+        var doubleAmount = amount.toDouble() / 100
+        doubleAmount += 0.001
+        val result = formatter.format(doubleAmount)
         return result.substring(0, result.length - 1)
     }
-    fun formatAmount(amount: Int, number: Int): String {
-        val locale = number2Locale(number)
+    fun formatAmount(amount: Int, numberCode: Int): String {
+        val locale = numberCode2Locale(numberCode)
         return formatAmount(amount, locale)
+    }
+
+    fun formatAmount(input: String, numberCode: Int): String {
+        val amount = yuan2fen(input)
+        return formatAmount(amount, numberCode)
+    }
+
+    /**
+     * 元转换成分
+     */
+    fun yuan2fen(text: String): Int {
+        val value = BigDecimal(text)
+        val result = value.multiply(BigDecimal("100"))
+        return result.toInt()
     }
 }

@@ -28,7 +28,7 @@ class CurrencyFragment : Fragment() {
         val root: View = binding.root
 
         val countryCodes = ArrayList<String>()
-        for (countryCode in Currency.numbers) {
+        for (countryCode in Currency.numberCodes) {
             countryCodes.add(countryCode.toString())
         }
         val adapterCountryCode = ArrayAdapter(
@@ -60,13 +60,12 @@ class CurrencyFragment : Fragment() {
             return
         }
         val index = binding.spNumber.selectedItemPosition
-        val number = Currency.numbers[index]
-        val fen = (text.toFloat() * 100).toInt()
+        val number = Currency.numberCodes[index]
         val currency = Currency.displayName(number)
 
-        val amount = Currency.formatAmount(fen, number)
-        val chineseNumber = ChineseNumberUtils.numToChinese(text, false, false)
-        val chineseAmount = ChineseNumberUtils.numToChinese(text, true, true)
+        val amount = Currency.formatAmount(text, number)
+        val chineseNumber = ChineseNumberUtils.inputToChinese(text, false, false)
+        val chineseAmount = ChineseNumberUtils.inputToChinese(text, true, true)
 
         binding.tvCurrency.text = currency
         binding.tvAmount.text = amount

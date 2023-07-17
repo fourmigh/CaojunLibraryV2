@@ -18,14 +18,14 @@ object ChineseNumberUtils {
     private val chineseUnits = arrayOf("", "万", "亿", "兆", "京", "垓", "秭", "穰", "沟", "涧", "正", "载", "极")
     private val ChineseCurrency = arrayOf("元", "角", "分", "整")
 
-    fun numToParts(num: String, currency: Boolean = DEFAULT_CURRENCY): Pair<String, String> {
+    fun numToParts(text: String, currency: Boolean = DEFAULT_CURRENCY): Pair<String, String> {
         //小数
         var decimal = ""
         //整数
         var integer = ""
 
-        val number = StringBuilder(num)
-        var indexDot = num.indexOf('.')
+        val number = StringBuilder(text)
+        var indexDot = text.indexOf('.')
         if (indexDot == 0) {
             number.insert(0, "0")
         }
@@ -41,11 +41,17 @@ object ChineseNumberUtils {
             if (currency && decimal.length > 2) {
                 decimal = decimal.substring(0, 2)
             }
+            if ("0" == decimal) {
+                decimal = ""
+            }
         }
         return Pair(integer, decimal)
     }
 
-    fun integerToChinese(integer: String, capital: Boolean = DEFAULT_CAPITAL): String {
+    /**
+     * 整数部分转中文
+     */
+    private fun integerToChinese(integer: String, capital: Boolean = DEFAULT_CAPITAL): String {
         val sb = StringBuilder()
         var lastNum = 0
         val cn = if (capital) ChineseNumbers else chineseNumbers
@@ -102,7 +108,10 @@ object ChineseNumberUtils {
         return sb.toString()
     }
 
-    fun decimalToChinese(decimal: String, capital: Boolean = DEFAULT_CAPITAL, currency: Boolean = DEFAULT_CURRENCY): String {
+    /**
+     * 小数部分转中文
+     */
+    private fun decimalToChinese(decimal: String, capital: Boolean = DEFAULT_CAPITAL, currency: Boolean = DEFAULT_CURRENCY): String {
         val sb = StringBuilder()
         if (TextUtils.isEmpty(decimal) && currency) {
             sb.append(ChineseCurrency[3])
@@ -127,8 +136,11 @@ object ChineseNumberUtils {
         return sb.toString()
     }
 
-    fun numToChinese(num: String, capital: Boolean = DEFAULT_CAPITAL, currency: Boolean = DEFAULT_CURRENCY): String {
-        val pair = numToParts(num, currency)
+    /**
+     * 输入数字转中文
+     */
+    fun inputToChinese(text: String, capital: Boolean = DEFAULT_CAPITAL, currency: Boolean = DEFAULT_CURRENCY): String {
+        val pair = numToParts(text, currency)
         val integer = integerToChinese(pair.first, capital)
         val decimal = decimalToChinese(pair.second, capital, currency)
         val dot = if (currency) {
@@ -141,5 +153,10 @@ object ChineseNumberUtils {
             dot
         }
         return "$integer$dot$decimal"
+    }
+
+    fun amountToChinese(fen: Int, capital: Boolean = DEFAULT_CAPITAL, currency: Boolean = DEFAULT_CURRENCY): String {
+        val text = (fen.toFloat() / 100).toString()
+        return inputToChinese(text, capital, currency)
     }
 }
