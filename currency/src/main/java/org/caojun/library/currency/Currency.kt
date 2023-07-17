@@ -78,10 +78,10 @@ object Currency {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    val numberCodes = arrayOf(124, 156, 250, 280, 380, 392, 410, 826, 840, 901)
+    val numbers = arrayOf(124, 156, 250, 280, 380, 392, 410, 826, 840, 901)
 
-    fun numberCode2Locale(numberCode: Int = 156): Locale {
-        return when (numberCode) {
+    fun number2Locale(number: Int = 156): Locale {
+        return when (number) {
             250 -> Locale.FRANCE
             280 -> Locale.GERMANY
             380 -> Locale.ITALY
@@ -107,23 +107,23 @@ object Currency {
     fun code(locale: Locale = Locale.getDefault()): String {
         return getCurrency(locale)?.currencyCode ?: ""
     }
-    fun code(numberCode: Int = 156): String {
-        val locale = numberCode2Locale(numberCode)
+    fun code(number: Int = 156): String {
+        val locale = number2Locale(number)
         return code(locale)
     }
 
     fun displayName(locale: Locale = Locale.getDefault()): String {
         return getCurrency(locale)?.displayName ?: ""
     }
-    fun displayName(numberCode: Int): String {
-        return displayName(numberCode2Locale(numberCode))
+    fun displayName(number: Int): String {
+        return displayName(number2Locale(number))
     }
 
     fun symbol(locale: Locale = Locale.getDefault()): String {
         return getCurrency(locale)?.symbol ?: ""
     }
-    fun symbol(numberCode: Int): String {
-        return symbol(numberCode2Locale(numberCode))
+    fun symbol(number: Int): String {
+        return symbol(number2Locale(number))
     }
 
     fun subtype(locale: Locale = Locale.getDefault()): String {
@@ -152,14 +152,14 @@ object Currency {
         val result = formatter.format(doubleAmount)
         return result.substring(0, result.length - 1)
     }
-    fun formatAmount(amount: Int, numberCode: Int): String {
-        val locale = numberCode2Locale(numberCode)
+    fun formatAmount(amount: Int, number: Int): String {
+        val locale = number2Locale(number)
         return formatAmount(amount, locale)
     }
 
-    fun formatAmount(input: String, numberCode: Int): String {
+    fun formatAmount(input: String, number: Int): String {
         val amount = yuan2fen(input)
-        return formatAmount(amount, numberCode)
+        return formatAmount(amount, number)
     }
 
     /**
