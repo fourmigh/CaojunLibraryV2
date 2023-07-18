@@ -95,6 +95,14 @@ class CountdownManager {
         pauseOrResume(key, false)
     }
 
+    fun pauseExcept(key: String) {
+        pauseOrResumeExcept(key, true)
+    }
+
+    fun resumeExcept(key: String) {
+        pauseOrResumeExcept(key, false)
+    }
+
     fun getCounter(key: String): Counter? {
         return counters[key]
     }
@@ -105,6 +113,15 @@ class CountdownManager {
             if (counter != null) {
                 counter.isPausing = isPausing
             }
+        }
+    }
+
+    private fun pauseOrResumeExcept(key: String, isPausing: Boolean) {
+        for (counter in counters) {
+            if (counter.key == key) {
+                continue
+            }
+            counter.value.isPausing = isPausing
         }
     }
 
