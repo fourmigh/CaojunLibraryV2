@@ -1,8 +1,6 @@
 package org.caojun.library.v2.fragment
 
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +9,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import org.caojun.library.timer.TimeZoneUtils
 import org.caojun.library.v2.databinding.FragmentTimeBinding
+import java.lang.StringBuilder
 
 class TimeFragment : Fragment() {
 
@@ -32,6 +31,15 @@ class TimeFragment : Fragment() {
         val adapter = ArrayAdapter(context, android.R.layout.simple_list_item_activated_1, timezones)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spTimeZones.adapter = adapter
+        binding.spTimeZones.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val timeZone = timezones[binding.spTimeZones.selectedItemPosition]
+                showTimeZoneInfo(timeZone)
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
 
         val timezones2 = TimeZoneUtils.getTimeZones2()
         val adapterLeft = ArrayAdapter(context, android.R.layout.simple_list_item_activated_1, timezones2.first)
@@ -74,6 +82,21 @@ class TimeFragment : Fragment() {
         val leftIndex = binding.spTimeZoneLeft.selectedItemPosition
         val rightIndex = binding.spTimeZoneRight.selectedItemPosition
         binding.tvTimeZone.text = TimeZoneUtils.getTimeZone(leftIndex, rightIndex)
+
+        showTimeZoneInfo(binding.tvTimeZone.text.toString())
+    }
+
+    private fun showTimeZoneInfo(timeZone: String) {
+        val tz = TimeZoneUtils.getTimeZone(timeZone)
+        val sb = StringBuilder()
+        sb.append("observesDaylightTime: ${tz.observesDaylightTime()}")
+        sb.append("\n")
+        sb.append("useDaylightTime: ${tz.useDaylightTime()}")
+        sb.append("\n")
+        sb.append("rawOffset: ${tz.rawOffset}")
+        sb.append("\n")
+        sb.append("time: ${TimeZoneUtils.getFormatTime(timeZone)}")
+        binding.tvTimeZoneInfo.text = sb.toString()
     }
 
     override fun onDestroyView() {

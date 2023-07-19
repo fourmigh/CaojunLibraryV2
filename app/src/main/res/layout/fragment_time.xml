@@ -33,4 +33,8 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tvTimeZoneInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

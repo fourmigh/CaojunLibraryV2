@@ -1,9 +1,11 @@
 package org.caojun.library.timer
 
+import android.annotation.SuppressLint
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Enumeration
 import java.util.Hashtable
 import java.util.TimeZone
-
 
 object TimeZoneUtils {
 
@@ -29,20 +31,15 @@ object TimeZoneUtils {
         return sb.toString()
     }
 
-    fun getTimeZone(timeZone: String): Pair<String, String>? {
+    private fun getTimeZonePair(timeZone: String): Pair<String, String>? {
         val tz = timeZone.split(TIME_ZONE_SEPARATOR)
-        var left = ""
-        var right = ""
-        if (tz.size == 2) {
-            left = tz[0]
-            right = tz[1]
+        return if (tz.size == 2) {
+            Pair(tz[0], tz[1])
         } else if (tz.size == 1) {
-            left = ""
-            right = tz[0]
+            Pair("", tz[0])
         } else {
-            return null
+            null
         }
-        return Pair(left, right)
     }
 
     fun getTimeZones2(): Pair<List<String>, Hashtable<String, List<String>>> {
@@ -50,7 +47,7 @@ object TimeZoneUtils {
         val first = ArrayList<String>()
         val second = Hashtable<String, ArrayList<String>>()
         for (timeZone in timeZones) {
-            val pair = getTimeZone(timeZone) ?: continue
+            val pair = getTimeZonePair(timeZone) ?: continue
             val left = pair.first
             val right = pair.second
             if (!first.contains(left)) {
@@ -73,5 +70,16 @@ object TimeZoneUtils {
             third[key] = value
         }
         return Pair(first, third)
+    }
+
+    fun getTimeZone(timeZone: String): TimeZone {
+        return TimeZone.getTimeZone(timeZone)
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getFormatTime(timeZone: String, dateFormat: String = "yyyy-MM-dd HH:mm:ss.SSS"): String {
+        val format = SimpleDateFormat(dateFormat)
+        format.timeZone = getTimeZone(timeZone)
+        return format.format(Date())
     }
 }
