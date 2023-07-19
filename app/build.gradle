@@ -55,4 +55,5 @@ dependencies {
     implementation project(':pinyin')
     implementation project(':countdown')
     implementation project(':currency')
+    implementation project(':timer')
 }

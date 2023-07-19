@@ -28,7 +28,7 @@ class CurrencyFragment : Fragment() {
         val root: View = binding.root
 
         val countryCodes = ArrayList<String>()
-        for (countryCode in Currency.numberCodes) {
+        for (countryCode in Currency.numbers) {
             countryCodes.add(countryCode.toString())
         }
         val adapterCountryCode = ArrayAdapter(
@@ -60,7 +60,7 @@ class CurrencyFragment : Fragment() {
             return
         }
         val index = binding.spNumber.selectedItemPosition
-        val number = Currency.numberCodes[index]
+        val number = Currency.numbers[index]
         val currency = Currency.displayName(number)
 
         val amount = Currency.formatAmount(text, number)

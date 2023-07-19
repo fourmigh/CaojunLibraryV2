@@ -47,4 +47,10 @@
         android:name="org.caojun.library.v2.fragment.CurrencyFragment"
         android:label="@string/menu_currency"
         tools:layout="@layout/fragment_currency" />
+
+    <fragment
+        android:id="@+id/nav_time"
+        android:name="org.caojun.library.v2.fragment.TimeFragment"
+        android:label="@string/menu_time"
+        tools:layout="@layout/fragment_time" />
 </navigation>
