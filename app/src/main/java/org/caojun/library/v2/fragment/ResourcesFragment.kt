@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import org.caojun.library.resources.LocaleUtils
 import org.caojun.library.resources.ResourcesUtils
 import org.caojun.library.resources.enums.Language
+import org.caojun.library.timer.TimeUtils
 import org.caojun.library.timer.addLog
 import org.caojun.library.v2.databinding.FragmentResourcesBinding
 
@@ -36,7 +37,10 @@ class ResourcesFragment : Fragment() {
         binding.spLanguage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 LocaleUtils.setLocale(context, locales[binding.spLanguage.selectedItemPosition])
-                binding.tvLanguage.addLog("resourceName: ${context.getString(org.caojun.library.timer.R.string.resource_name)}")
+                binding.tvLanguage.addLog("resourceName:    ${context.getString(org.caojun.library.timer.R.string.resource_name)}")
+                val dataFormat = context.getString(org.caojun.library.timer.R.string.data_format)
+                val time = TimeUtils.getTime(dataFormat)
+                binding.tvLanguage.addLog("time:                         $time")
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {

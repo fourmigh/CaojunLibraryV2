@@ -41,6 +41,10 @@ object TimeUtils {
         return getTime(TimeZone.getTimeZone(timeZone), dateFormat, time)
     }
 
+    fun getTime(dateFormat: String = DEFAULT_DATA_FORMAT): String {
+        return getTime(LocalTimeZone, dateFormat, System.currentTimeMillis())
+    }
+
     fun getTime(): String {
         return getTime(LocalTimeZone, DEFAULT_DATA_FORMAT, System.currentTimeMillis())
     }

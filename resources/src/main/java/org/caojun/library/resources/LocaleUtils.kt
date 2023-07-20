@@ -13,6 +13,6 @@ object LocaleUtils {
         val res = context.resources
         val config = res.configuration
         config.locale = locale
-        res.updateConfiguration(config, res.displayMetrics);
+        res.updateConfiguration(config, res.displayMetrics)
     }
 }
