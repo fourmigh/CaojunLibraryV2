@@ -1,9 +1,14 @@
 package org.caojun.library.timer
 
 import android.annotation.SuppressLint
+import android.os.Build
+import org.caojun.library.timer.enums.TimeZoneMethod
 import java.text.SimpleDateFormat
+import java.time.ZonedDateTime
+import java.util.Calendar
 import java.util.Date
 import java.util.Enumeration
+import java.util.GregorianCalendar
 import java.util.Hashtable
 import java.util.TimeZone
 
@@ -81,5 +86,25 @@ object TimeZoneUtils {
         val format = SimpleDateFormat(dateFormat)
         format.timeZone = getTimeZone(timeZone)
         return format.format(Date())
+    }
+
+    fun getTimeZone(method: TimeZoneMethod = TimeZoneMethod.TimeZone): String {
+        return when (method) {
+            TimeZoneMethod.TimeZone -> {
+                TimeZone.getDefault().id
+            }
+            TimeZoneMethod.Calendar -> {
+                Calendar.getInstance().timeZone.id
+            }
+            TimeZoneMethod.GregorianCalendar -> {
+                GregorianCalendar().timeZone.id
+            }
+            TimeZoneMethod.System -> {
+                System.getProperty("user.timezone") ?: ""
+            }
+//            TimeZoneMethod.ZonedDateTime -> {
+//                ZonedDateTime.now().getZone().id
+//            }
+        }
     }
 }
