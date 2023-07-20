@@ -10,9 +10,14 @@ object LocaleUtils {
     }
 
     fun setLocale(context: Context, locale: Locale) {
+        Locale.setDefault(locale)
         val res = context.resources
         val config = res.configuration
         config.locale = locale
         res.updateConfiguration(config, res.displayMetrics)
+    }
+
+    fun getDefaultLocale(): Locale {
+        return Locale.getDefault()
     }
 }

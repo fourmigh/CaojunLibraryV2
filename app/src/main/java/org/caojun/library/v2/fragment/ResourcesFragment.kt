@@ -38,9 +38,13 @@ class ResourcesFragment : Fragment() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 LocaleUtils.setLocale(context, locales[binding.spLanguage.selectedItemPosition])
                 binding.tvLanguage.addLog("resourceName:    ${context.getString(org.caojun.library.timer.R.string.resource_name)}")
+
+                val defaultLocal = LocaleUtils.getDefaultLocale()
+                binding.tvLanguage.addLog("defaultLocal:    $defaultLocal")
+
                 val dataFormat = context.getString(org.caojun.library.timer.R.string.data_format)
                 val time = TimeUtils.getTime(dataFormat)
-                binding.tvLanguage.addLog("time:                         $time")
+                binding.tvLanguage.addLog("time:    $time")
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
