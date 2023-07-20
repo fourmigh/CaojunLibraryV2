@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import org.caojun.library.timer.TimeUtils
 import org.caojun.library.timer.enums.TimeZoneMethod
 import org.caojun.library.timer.TimeZoneUtils
 import org.caojun.library.v2.databinding.FragmentTimeBinding
@@ -96,7 +97,8 @@ class TimeFragment : Fragment() {
         sb.append("\n")
         sb.append("rawOffset: ${tz.rawOffset}")
         sb.append("\n")
-        sb.append("time: ${TimeZoneUtils.getFormatTime(timeZone)}")
+//        sb.append("time: ${TimeZoneUtils.getFormatTime(timeZone)}")
+        sb.append("time: ${TimeUtils.getTime(tz)}")
         sb.append("\n")
         sb.append("timeZone(TimeZone): ${TimeZoneUtils.getTimeZone(TimeZoneMethod.TimeZone)}")
         sb.append("\n")
@@ -105,8 +107,8 @@ class TimeFragment : Fragment() {
         sb.append("timeZone(GregorianCalendar): ${TimeZoneUtils.getTimeZone(TimeZoneMethod.GregorianCalendar)}")
         sb.append("\n")
         sb.append("timeZone(System): ${TimeZoneUtils.getTimeZone(TimeZoneMethod.System)}")
-        sb.append("\n")
-        sb.append("timeZone(ZonedDateTime): ${TimeZoneUtils.getTimeZone(TimeZoneMethod.ZonedDateTime)}")
+//        sb.append("\n")
+//        sb.append("timeZone(ZonedDateTime): ${TimeZoneUtils.getTimeZone(TimeZoneMethod.ZonedDateTime)}")
         binding.tvTimeZoneInfo.text = sb.toString()
     }
 

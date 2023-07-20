@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="resource_name">汉语-中国</string>
+    <string name="data_format">yyyy年MM月dd日 HH时mm分ss秒SSS毫秒</string>
+</resources>

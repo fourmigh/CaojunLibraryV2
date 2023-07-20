@@ -16,4 +16,5 @@
     <string name="menu_countdown_movie">CountdownMovie Demo</string>
     <string name="menu_currency">Currency Demo</string>
     <string name="menu_time">Time Demo</string>
+    <string name="menu_resources">Resources Demo</string>
 </resources>

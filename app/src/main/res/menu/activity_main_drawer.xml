@@ -36,5 +36,9 @@
             android:id="@+id/nav_time"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_time" />
+        <item
+            android:id="@+id/nav_resources"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_resources" />
     </group>
 </menu>

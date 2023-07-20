@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="resource_name">西班牙语-美国</string>
+    <string name="data_format">dd/MM/yyyy HH:mm:ss.SSS z</string>
+</resources>

@@ -81,12 +81,12 @@ object TimeZoneUtils {
         return TimeZone.getTimeZone(timeZone)
     }
 
-    @SuppressLint("SimpleDateFormat")
-    fun getFormatTime(timeZone: String, dateFormat: String = "yyyy-MM-dd HH:mm:ss.SSS"): String {
-        val format = SimpleDateFormat(dateFormat)
-        format.timeZone = getTimeZone(timeZone)
-        return format.format(Date())
-    }
+//    @SuppressLint("SimpleDateFormat")
+//    fun getFormatTime(timeZone: String, dateFormat: String = "yyyy-MM-dd HH:mm:ss.SSS"): String {
+//        val format = SimpleDateFormat(dateFormat)
+//        format.timeZone = getTimeZone(timeZone)
+//        return format.format(Date())
+//    }
 
     fun getTimeZone(method: TimeZoneMethod = TimeZoneMethod.TimeZone): String {
         return when (method) {
