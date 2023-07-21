@@ -8,8 +8,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import org.caojun.library.resources.LocaleUtils
-import org.caojun.library.resources.ResourcesUtils
-import org.caojun.library.resources.enums.Language
 import org.caojun.library.timer.TimeUtils
 import org.caojun.library.timer.addLog
 import org.caojun.library.v2.databinding.FragmentResourcesBinding
@@ -39,7 +37,7 @@ class ResourcesFragment : Fragment() {
                 LocaleUtils.setLocale(context, locales[binding.spLanguage.selectedItemPosition])
                 binding.tvLanguage.addLog("resourceName:    ${context.getString(org.caojun.library.timer.R.string.resource_name)}")
 
-                val defaultLocal = LocaleUtils.getDefaultLocale()
+                val defaultLocal = LocaleUtils.getLocale()
                 binding.tvLanguage.addLog("defaultLocal:    $defaultLocal")
 
                 val dataFormat = context.getString(org.caojun.library.timer.R.string.data_format)

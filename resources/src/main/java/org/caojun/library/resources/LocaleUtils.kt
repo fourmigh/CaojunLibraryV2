@@ -17,7 +17,7 @@ object LocaleUtils {
         res.updateConfiguration(config, res.displayMetrics)
     }
 
-    fun getDefaultLocale(): Locale {
+    fun getLocale(): Locale {
         return Locale.getDefault()
     }
 }

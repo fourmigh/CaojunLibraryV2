@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment
 import org.caojun.library.timer.TimeUtils
 import org.caojun.library.timer.enums.TimeZoneMethod
 import org.caojun.library.timer.TimeZoneUtils
+import org.caojun.library.timer.addLog
 import org.caojun.library.v2.databinding.FragmentTimeBinding
 import java.lang.StringBuilder
+import java.util.Calendar
 
 class TimeFragment : Fragment() {
 
@@ -109,6 +111,10 @@ class TimeFragment : Fragment() {
         sb.append("timeZone(System): ${TimeZoneUtils.getTimeZone(TimeZoneMethod.System)}")
 //        sb.append("\n")
 //        sb.append("timeZone(ZonedDateTime): ${TimeZoneUtils.getTimeZone(TimeZoneMethod.ZonedDateTime)}")
+        val weekDay = TimeUtils.getWeekDay()
+        sb.append("\n")
+        sb.append("weekDay: $weekDay")
+
         binding.tvTimeZoneInfo.text = sb.toString()
     }
 

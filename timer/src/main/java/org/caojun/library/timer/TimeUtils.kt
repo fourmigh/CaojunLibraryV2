@@ -4,11 +4,23 @@ import android.annotation.SuppressLint
 import android.text.TextUtils
 import android.widget.TextView
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
 import kotlin.math.abs
 
 object TimeUtils {
+
+    enum class WeekDay {
+        SUNDAY,
+        MONDAY,
+        TUESDAY,
+        WEDNESDAY,
+        THURSDAY,
+        FRIDAY,
+        SATURDAY,
+        XINGQIBA
+    }
 
     private val LocalTimeZone = TimeZone.getDefault()
     const val DEFAULT_DATA_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS"
@@ -47,6 +59,19 @@ object TimeUtils {
 
     fun getTime(): String {
         return getTime(LocalTimeZone, DEFAULT_DATA_FORMAT, System.currentTimeMillis())
+    }
+
+    fun getWeekDay(timestamp: Long = System.currentTimeMillis()): WeekDay {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = timestamp
+        val weekDay = calendar.get(Calendar.DAY_OF_WEEK) - Calendar.SUNDAY
+        val weekDays = WeekDay.values()
+        for (wd in weekDays) {
+            if (wd.ordinal == weekDay) {
+                return wd
+            }
+        }
+        return WeekDay.XINGQIBA
     }
 }
 
