@@ -24,6 +24,7 @@ object TimeUtils {
 
     private val LocalTimeZone = TimeZone.getDefault()
     const val DEFAULT_DATA_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS"
+    const val DEFAULT_DATA_FORMAT_Z = "$DEFAULT_DATA_FORMAT z"
 
     @SuppressLint("SimpleDateFormat")
     private fun getSimpleDateFormat(dateFormat: String = DEFAULT_DATA_FORMAT, timeZone: TimeZone = LocalTimeZone): SimpleDateFormat {

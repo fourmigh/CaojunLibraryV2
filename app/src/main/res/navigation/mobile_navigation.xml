@@ -59,4 +59,10 @@
         android:name="org.caojun.library.v2.fragment.ResourcesFragment"
         android:label="@string/menu_resources"
         tools:layout="@layout/fragment_time" />
+
+    <fragment
+        android:id="@+id/nav_color"
+        android:name="org.caojun.library.v2.fragment.ColorFragment"
+        android:label="@string/menu_color"
+        tools:layout="@layout/fragment_color" />
 </navigation>
