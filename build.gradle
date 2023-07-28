@@ -5,12 +5,6 @@ buildscript {
         core_ktx_version = '1.10.1'
         appcompat_version = '1.6.1'
     }
-    repositories {
-        maven { url 'https://maven.aliyun.com/repository/public/' }
-        google()
-        mavenCentral()
-        maven { url 'https://developer.huawei.com/repo/' }
-    }
 }
 
 plugins {

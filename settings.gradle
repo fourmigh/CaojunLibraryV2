@@ -10,6 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://developer.huawei.com/repo/' }
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "CaojunLibraryV2"
@@ -23,3 +26,5 @@ include ':currency'
 include ':timer'
 include ':resources'
 include ':color'
+include ':permission'
+include ':tensorflow'
