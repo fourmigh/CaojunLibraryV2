@@ -3,4 +3,8 @@
     package="org.caojun.library.tensorflow">
 
     <uses-permission android:name="android.permission.CAMERA" />
+
+    <application>
+        <activity android:name=".TensorFlowActivity"/>
+    </application>
 </manifest>
