@@ -39,15 +39,15 @@ object FileUtils {
      * @param fileName 文件名（包含扩展名）
      */
     @JvmStatic
-    fun getSaveFile(type: String, folderName: String?, fileName: String?): File {
-        val file = getFile(type, folderName, fileName)
+    fun getSaveFile(type: String, folderName: String?, fileName: String?): File? {
+        val file = getFile(type, folderName, fileName) ?: return null
         if (!file.exists()) {
             file.createNewFile()
         }
         return file
     }
-    fun getFile(type: String, folderName: String?, fileName: String?): File {
-        val storePath = getFolder(type, folderName)
+    fun getFile(type: String, folderName: String?, fileName: String?): File? {
+        val storePath = getFolder(type, folderName) ?: return null
         return File(storePath, fileName)
     }
 
@@ -62,16 +62,20 @@ object FileUtils {
     }
 
     fun getFolder(type: String, folderName: String?): File? {
-        val storePath = File(
-            Environment.getExternalStoragePublicDirectory(type),
-            folderName
-        )
-        if (!storePath.exists()) {
-            if (!storePath.mkdirs()) {
-                return null
+        try {
+            val storePath = File(
+                Environment.getExternalStoragePublicDirectory(type),
+                folderName
+            )
+            if (!storePath.exists()) {
+                if (!storePath.mkdirs()) {
+                    return null
+                }
             }
+            return storePath
+        } catch (e: Exception) {
+            return null
         }
-        return storePath
     }
 
     fun findFile(fileName: String, folderFile: File? = Environment.getExternalStorageDirectory()): File? {
@@ -381,5 +385,23 @@ object FileUtils {
             return null
         }
         return FileInputStream(file)
+    }
+
+    fun getSaveFile(context: Context, folderName: String, fileName: String): File {
+
+        val file = getSaveFile(Environment.DIRECTORY_DOCUMENTS, folderName, fileName)
+        if (file != null) {
+            return file
+        }
+
+        val cacheDir = context.cacheDir
+        val customCacheDir = File(cacheDir, folderName)
+        customCacheDir.mkdir()
+        val fileCache = File(customCacheDir.absolutePath, fileName)
+        if (fileCache.exists()) {
+            return fileCache
+        }
+        fileCache.createNewFile()
+        return fileCache
     }
 }
