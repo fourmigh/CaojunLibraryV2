@@ -387,7 +387,7 @@ object FileUtils {
         return FileInputStream(file)
     }
 
-    fun getSaveFile(context: Context, folderName: String, fileName: String): File {
+    fun getSaveFile(context: Context, folderName: String, fileName: String, createNewFile: Boolean = true): File {
 
         val file = getSaveFile(Environment.DIRECTORY_DOCUMENTS, folderName, fileName)
         if (file != null) {
@@ -401,7 +401,9 @@ object FileUtils {
         if (fileCache.exists()) {
             return fileCache
         }
-        fileCache.createNewFile()
+        if (createNewFile) {
+            fileCache.createNewFile()
+        }
         return fileCache
     }
 }

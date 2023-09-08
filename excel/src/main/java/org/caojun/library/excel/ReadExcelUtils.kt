@@ -2,9 +2,12 @@ package org.caojun.library.excel
 
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
+import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.caojun.library.file.FileUtils
+import java.io.File
+import java.io.FileOutputStream
 
 object ReadExcelUtils {
 
@@ -23,6 +26,29 @@ object ReadExcelUtils {
         hmWorkbook.remove(key)
     }
 
+    private fun readWorkbook(filePath: String): XSSFWorkbook? {
+        return try {
+            val inputStream = FileUtils.getInputStream(filePath)
+            XSSFWorkbook(inputStream)
+        } catch (e: Exception) {
+            return try {
+                val file = File(filePath)
+                val workbook = XSSFWorkbook()
+                val sheet = workbook.createSheet()
+                val row = sheet.createRow(0)
+                val cell = row.createCell(0)
+                cell.setCellValue("")
+                FileOutputStream(file).use { fos ->
+                    workbook.write(fos) // 写入Excel文件
+                }
+                workbook.close()
+                readWorkbook(filePath)
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
+
     /**
      * 第一层：Workbook
      */
@@ -31,8 +57,7 @@ object ReadExcelUtils {
         if (hmWorkbook.containsKey(key)) {
             return hmWorkbook[key]
         }
-        val inputStream = FileUtils.getInputStream(filePath) ?: return null
-        val workbook = XSSFWorkbook(inputStream)
+        val workbook = readWorkbook(filePath) ?: return null
         hmWorkbook[key] = workbook
         return workbook
     }
@@ -49,6 +74,10 @@ object ReadExcelUtils {
     fun getNumberOfSheets(filePath: String): Int {
         val workbook = getWorkbook(filePath) ?: return 0
         return workbook.numberOfSheets
+    }
+
+    fun getSheets(workbook: XSSFWorkbook): Iterator<Sheet> {
+        return workbook.sheetIterator()
     }
 
     /**

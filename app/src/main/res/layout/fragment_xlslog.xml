@@ -6,7 +6,13 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/etLog"
+        android:id="@+id/etFileName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnOpenExcel"
+        android:text="Open"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

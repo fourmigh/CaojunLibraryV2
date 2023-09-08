@@ -2,6 +2,7 @@ package org.caojun.library.excel
 
 import android.content.Context
 import android.os.Environment
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.caojun.library.file.FileUtils
 
 class ExcelManager {
@@ -21,12 +22,12 @@ class ExcelManager {
             return excelManager!!
         }
 
-        private const val FOLDER_NAME = "XLS"
+        private const val FOLDER_NAME = "XLSX"
+        private const val EXTENSION_NAME = "xlsx"
     }
 
-    fun openFile(context: Context, fileName: String, folderName: String = FOLDER_NAME): Boolean {
-        val file = FileUtils.getSaveFile(context, folderName, "$fileName.xls")
-        val workbook = ReadExcelUtils.getWorkbook(file.absolutePath)
-        return workbook != null
+    fun openFile(context: Context, fileName: String, folderName: String = FOLDER_NAME): XSSFWorkbook? {
+        val file = FileUtils.getSaveFile(context, folderName, "$fileName.$EXTENSION_NAME", false)
+        return ReadExcelUtils.getWorkbook(file.absolutePath)
     }
 }
