@@ -9,9 +9,6 @@ import org.caojun.library.file.FileUtils
 object ReadExcelUtils {
 
     private val hmWorkbook = HashMap<String, XSSFWorkbook>()
-    private val hmSheet = HashMap<String, XSSFSheet>()
-    private val hmRow = HashMap<String, Row>()
-    private val hmCell = HashMap<String, Cell>()
 
     init {
         init()
@@ -19,9 +16,11 @@ object ReadExcelUtils {
 
     private fun init() {
         hmWorkbook.clear()
-        hmSheet.clear()
-        hmRow.clear()
-        hmCell.clear()
+    }
+
+    fun refresh(workbook: XSSFWorkbook) {
+        val key = getFilePath(workbook) ?: return
+        hmWorkbook.remove(key)
     }
 
     /**
@@ -38,6 +37,15 @@ object ReadExcelUtils {
         return workbook
     }
 
+    fun getFilePath(workbook: XSSFWorkbook): String? {
+        for (filePath in hmWorkbook.keys) {
+            if (hmWorkbook[filePath] == workbook) {
+                return filePath
+            }
+        }
+        return null
+    }
+
     fun getNumberOfSheets(filePath: String): Int {
         val workbook = getWorkbook(filePath) ?: return 0
         return workbook.numberOfSheets
@@ -46,70 +54,44 @@ object ReadExcelUtils {
     /**
      * 第二层：Sheet
      */
-    fun getSheet(filePath: String, index: Int): XSSFSheet? {
-        val key = "$filePath-$index"
-        if (hmSheet.containsKey(key)) {
-            return hmSheet[key]
-        }
-        if (index < 0) {
+    fun getSheet(workbook: XSSFWorkbook, indexSheet: Int): XSSFSheet? {
+        if (indexSheet < 0) {
             return null
         }
-        val workbook = getWorkbook(filePath) ?: return null
-        if (index >= workbook.numberOfSheets) {
+        if (indexSheet >= workbook.numberOfSheets) {
             return null
         }
-        val sheet = workbook.getSheetAt(index)
-        hmSheet[key] = sheet
-        return sheet
+        return workbook.getSheetAt(indexSheet)
     }
 
-    fun getNumberOfRows(filePath: String, indexSheet: Int): Int {
-        val sheet = getSheet(filePath, indexSheet) ?: return 0
-        return sheet.physicalNumberOfRows
+    fun getNumberOfRows(sheet: XSSFSheet?): Int {
+        return sheet?.physicalNumberOfRows ?: 0
     }
 
     /**
      * 第三层：Row
      */
-    fun getRow(filePath: String, indexSheet: Int, index: Int): Row? {
-        val key = "$filePath-$indexSheet-$index"
-        if (hmRow.containsKey(key)) {
-            return hmRow[key]
-        }
-        if (index < 0) {
+    fun getRow(sheet: XSSFSheet, indexRow: Int): Row? {
+        if (indexRow < 0) {
             return null
         }
-        val sheet = getSheet(filePath, indexSheet) ?: return null
-        if (index >= sheet.physicalNumberOfRows) {
+        if (indexRow >= sheet.physicalNumberOfRows) {
             return null
         }
-        val row = sheet.getRow(index)
-        hmRow[key] = row
-        return row
+        return sheet.getRow(indexRow)
     }
 
-    fun getNumberOfCells(filePath: String, indexSheet: Int, indexRow: Int): Int {
-        val row = getRow(filePath, indexSheet, indexRow) ?: return 0
-        return row.physicalNumberOfCells
+    fun getNumberOfCells(row: Row?): Int {
+        return row?.physicalNumberOfCells ?: 0
     }
 
     /**
      * 第四层：Cell
      */
-    fun getCell(filePath: String, indexSheet: Int, indexRow: Int, index: Int): Cell? {
-        val key = "$filePath-$indexSheet-$indexRow-$index"
-        if (hmCell.containsKey(key)) {
-            return hmCell[key]
-        }
-        if (index < 0) {
+    fun getCell(row: Row, indexCell: Int): Cell? {
+        if (indexCell < 0) {
             return null
         }
-        val row = getRow(filePath, indexSheet, indexRow) ?: return null
-        if (index >= row.physicalNumberOfCells) {
-            return null
-        }
-        val cell = row.getCell(index)
-        hmCell[key] = cell
-        return cell
+        return row.getCell(indexCell)
     }
 }

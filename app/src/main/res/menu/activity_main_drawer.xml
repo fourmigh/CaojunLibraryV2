@@ -48,5 +48,9 @@
             android:id="@+id/nav_toast"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_toast" />
+        <item
+            android:id="@+id/nav_xlslog"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_xlslog" />
     </group>
 </menu>

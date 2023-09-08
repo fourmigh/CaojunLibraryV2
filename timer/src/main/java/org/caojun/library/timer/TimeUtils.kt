@@ -41,7 +41,7 @@ object TimeUtils {
         return df
     }
 
-    fun getTime(timeZone: TimeZone = LocalTimeZone, dateFormat: String = DEFAULT_DATA_FORMAT, time: Long = System.currentTimeMillis()): String {
+    fun getTime(dateFormat: String = DEFAULT_DATA_FORMAT, time: Long = System.currentTimeMillis(), timeZone: TimeZone = LocalTimeZone): String {
         if (TextUtils.isEmpty(dateFormat)) {
             return ""
         }
@@ -50,16 +50,12 @@ object TimeUtils {
         return df.format(date)
     }
 
-    fun getTime(timeZone: String = LocalTimeZone.id, dateFormat: String = DEFAULT_DATA_FORMAT, time: Long = System.currentTimeMillis()): String {
-        return getTime(TimeZone.getTimeZone(timeZone), dateFormat, time)
-    }
-
     fun getTime(dateFormat: String = DEFAULT_DATA_FORMAT): String {
-        return getTime(LocalTimeZone, dateFormat, System.currentTimeMillis())
+        return getTime(dateFormat, System.currentTimeMillis(), LocalTimeZone)
     }
 
     fun getTime(): String {
-        return getTime(LocalTimeZone, DEFAULT_DATA_FORMAT, System.currentTimeMillis())
+        return getTime(DEFAULT_DATA_FORMAT, System.currentTimeMillis(), LocalTimeZone)
     }
 
     fun getWeekDay(timestamp: Long = System.currentTimeMillis()): WeekDay {

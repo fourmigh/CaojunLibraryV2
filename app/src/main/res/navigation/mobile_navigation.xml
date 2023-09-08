@@ -65,4 +65,10 @@
         android:name="org.caojun.library.v2.fragment.ColorFragment"
         android:label="@string/menu_color"
         tools:layout="@layout/fragment_color" />
+
+    <fragment
+        android:id="@+id/nav_xlslog"
+        android:name="org.caojun.library.v2.fragment.XlsLogFragment"
+        android:label="@string/menu_xlslog"
+        tools:layout="@layout/fragment_xlslog" />
 </navigation>

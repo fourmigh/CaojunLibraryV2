@@ -1,9 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        sdk_version = 33
+        sdk_version = 34
         core_ktx_version = '1.10.1'
         appcompat_version = '1.6.1'
+        room_version = '2.5.2'
     }
 }
 

@@ -1,13 +1,15 @@
 package org.caojun.library.excel
 
+import org.apache.poi.xssf.usermodel.XSSFRow
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.FileOutputStream
 
 object WriteExcelUtils {
 
-    fun save(workbook: XSSFWorkbook, filePath: String): Boolean {
+    fun save(workbook: XSSFWorkbook): Boolean {
         return try {
+            val filePath = ReadExcelUtils.getFilePath(workbook) ?: return false
             val fos = FileOutputStream(filePath)
             workbook.write(fos)
             true
@@ -16,10 +18,7 @@ object WriteExcelUtils {
         }
     }
 
-    private fun shiftRows(startRow: Int, sheet: XSSFSheet?, n: Int = 1): Boolean {
-        if (startRow < 0 || sheet == null) {
-            return false
-        }
+    fun shiftRows(sheet: XSSFSheet, startRow: Int, n: Int = 1): Boolean {
         if (startRow >= sheet.lastRowNum) {
             return true
         }
@@ -31,17 +30,17 @@ object WriteExcelUtils {
         }
     }
 
-    fun write(sheet: XSSFSheet?, row: Int, column: Int, value: String): Boolean {
-        if (sheet == null) {
-            return false
+    private fun getWriteRow(sheet: XSSFSheet, rowIndex: Int): XSSFRow {
+        return if (rowIndex >= sheet.lastRowNum) {
+            sheet.createRow(rowIndex)
+        } else {
+            sheet.getRow(rowIndex)
         }
+    }
+
+    fun writeCell(row: XSSFRow, columnIndex: Int, value: String): Boolean {
         return try {
-            val newRow = if (row >= sheet.lastRowNum) {
-                sheet.createRow(row)
-            } else {
-                sheet.getRow(row)
-            }
-            val cell = newRow.createCell(column)
+            val cell = row.createCell(columnIndex)
             cell.setCellValue(value)
             true
         } catch (e: Exception) {
@@ -49,26 +48,15 @@ object WriteExcelUtils {
         }
     }
 
-//    fun insertCell(columnIndex: Int, rownum: Int, sheet: XSSFSheet?, value: String): Boolean {
-//        if (sheet == null) {
-//            return false
-//        }
-//        if (!shiftRows(rownum, sheet)) {
-//            return false
-//        }
-//        return try {
-//            val newRow = sheet.createRow(rownum)
-//            newRow.createCell(columnIndex).setCellValue(value)
-//            true
-//        } catch (e: Exception) {
-//            false
-//        }
-//    }
-//
-//    fun addCell(rownum: Int, sheet: XSSFSheet?, value: String): Boolean {
-//        if (sheet == null) {
-//            return false
-//        }
-//        return insertCell(sheet.lastRowNum + 1, rownum, sheet, value)
-//    }
+    fun writeRow(row: XSSFRow, values: List<String>): Boolean {
+        return try {
+            for (columnIndex in values.indices) {
+                val cell = row.createCell(columnIndex)
+                cell.setCellValue(values[columnIndex])
+            }
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
 }

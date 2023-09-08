@@ -1,5 +1,6 @@
 package org.caojun.library.excel
 
+import android.content.Context
 import android.os.Environment
 import org.caojun.library.file.FileUtils
 
@@ -23,8 +24,8 @@ class ExcelManager {
         private const val FOLDER_NAME = "XLS"
     }
 
-    fun openFile(fileName: String, folderName: String = FOLDER_NAME): Boolean {
-        val file = FileUtils.getSaveFile(Environment.DIRECTORY_DOCUMENTS, folderName, "$fileName.xls")
+    fun openFile(context: Context, fileName: String, folderName: String = FOLDER_NAME): Boolean {
+        val file = FileUtils.getSaveFile(context, folderName, "$fileName.xls")
         val workbook = ReadExcelUtils.getWorkbook(file.absolutePath)
         return workbook != null
     }

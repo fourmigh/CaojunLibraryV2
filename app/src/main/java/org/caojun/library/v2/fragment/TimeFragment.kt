@@ -100,7 +100,7 @@ class TimeFragment : Fragment() {
         sb.append("rawOffset: ${tz.rawOffset}")
         sb.append("\n")
 //        sb.append("time: ${TimeZoneUtils.getFormatTime(timeZone)}")
-        sb.append("time: ${TimeUtils.getTime(tz, TimeUtils.DEFAULT_DATA_FORMAT_Z)}")
+        sb.append("time: ${TimeUtils.getTime(TimeUtils.DEFAULT_DATA_FORMAT_Z, System.currentTimeMillis(), tz)}")
         sb.append("\n")
         sb.append("timeZone(TimeZone): ${TimeZoneUtils.getTimeZone(TimeZoneMethod.TimeZone)}")
         sb.append("\n")

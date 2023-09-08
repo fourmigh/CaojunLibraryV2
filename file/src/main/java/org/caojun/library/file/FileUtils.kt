@@ -20,10 +20,10 @@ object FileUtils {
         }
     }
 
-    fun getSaveFile(path: String): File {
+    fun getSaveFile(path: String): File? {
         val file = File(path)
         if (!file.exists()) {
-            val folder = file.parentFile
+            val folder = file.parentFile ?: return null
             if (!folder.exists()) {
                 folder.mkdirs()
             }
@@ -39,14 +39,14 @@ object FileUtils {
      * @param fileName 文件名（包含扩展名）
      */
     @JvmStatic
-    fun getSaveFile(type: String, folderName: String?, fileName: String?): File? {
+    fun getSaveFile(type: String, folderName: String, fileName: String): File? {
         val file = getFile(type, folderName, fileName) ?: return null
         if (!file.exists()) {
             file.createNewFile()
         }
         return file
     }
-    fun getFile(type: String, folderName: String?, fileName: String?): File? {
+    fun getFile(type: String, folderName: String, fileName: String): File? {
         val storePath = getFolder(type, folderName) ?: return null
         return File(storePath, fileName)
     }
@@ -61,7 +61,7 @@ object FileUtils {
         return storePath
     }
 
-    fun getFolder(type: String, folderName: String?): File? {
+    fun getFolder(type: String, folderName: String): File? {
         try {
             val storePath = File(
                 Environment.getExternalStoragePublicDirectory(type),
@@ -221,7 +221,7 @@ object FileUtils {
         if (!folder.isDirectory) {
             return null
         }
-        val list = folder.listFiles()
+        val list = folder.listFiles() ?: return null
         var f : File? = null
         for (file in list) {
             if (!file.isFile) {
