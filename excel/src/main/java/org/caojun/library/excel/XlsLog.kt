@@ -154,6 +154,7 @@ object XlsLog {
         isRunning = false
     }
 
+    private var isExporting = false
     interface ExportListener {
         /**
          * first: fileName
@@ -167,7 +168,11 @@ object XlsLog {
      * 从数据库导出到Excel
      */
     fun exportToExcel(context: Context, listener: ExportListener? = null) {
+        if (isExporting) {
+            return
+        }
         runThread {
+            isExporting = true
             val dao = ExcelLogDatabase.getDatabase(context).getDao()
             var excelLog = dao.queryFirst()
             while (excelLog != null) {
@@ -187,6 +192,7 @@ object XlsLog {
                 excelLog = dao.queryFirst()
             }
             listener?.onFinish()
+            isExporting = false
         }
     }
 }
