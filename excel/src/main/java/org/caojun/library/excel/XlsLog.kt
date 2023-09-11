@@ -2,6 +2,7 @@ package org.caojun.library.excel
 
 import android.content.Context
 import android.os.SystemClock
+import android.text.TextUtils
 import org.caojun.library.excel.enums.Order
 import org.caojun.library.excel.enums.SaveType
 import org.caojun.library.excel.room.ExcelLog
@@ -170,6 +171,7 @@ object XlsLog {
             val dao = ExcelLogDatabase.getDatabase(context).getDao()
             var excelLog = dao.queryFirst()
             while (excelLog != null) {
+                SystemClock.sleep(10)
                 val count = dao.count()
                 val pair = listener?.onDataRead(excelLog, count)
                 val fileName = pair?.first ?: excelLog.getDate()
@@ -178,7 +180,9 @@ object XlsLog {
                 ExcelManager.getInstance().writeRow(workbook, excelLog.getCells(), order, maxRowsPerSheet)
                 val filePath = WriteExcelUtils.save(workbook, true)
                 listener?.onDataWrite(excelLog.getCells(), filePath)
-
+                if (TextUtils.isEmpty(filePath)) {
+                    continue
+                }
                 dao.delete(excelLog)
                 excelLog = dao.queryFirst()
             }
