@@ -97,38 +97,38 @@ object XlsLog {
     private fun doSaveLog(context: Context) {
         try {
             val excelLog = logs[0]
-            when (saveType) {
+            val result = when (saveType) {
                 SaveType.ROOM -> {
                     saveToDatabase(context, excelLog)
                 }
                 SaveType.XLSX -> {
-                    insert(context, excelLog)
+                    saveToExcel(context, excelLog)
                 }
             }
-            logs.removeAt(0)
-            KLog.i("XlsLog", "saveLog.excelLog: ${excelLog.getCells()}")
-            KLog.d("XlsLog", "saveLog.left: ${logs.size}")
+            if (result) {
+                logs.removeAt(0)
+                KLog.i("XlsLog", "saveLog.excelLog: ${excelLog.getCells()}")
+                KLog.d("XlsLog", "saveLog.left: ${logs.size}")
+            }
         } catch (e: Exception) {
             KLog.e("XlsLog", "saveLog: $e")
         }
     }
 
-    private fun saveToDatabase(context: Context, excelLog: ExcelLog) {
-        val dao = ExcelLogDatabase.getDatabase(context).getDao()
-        dao.insert(excelLog)
+    private fun saveToDatabase(context: Context, excelLog: ExcelLog): Boolean {
+        return try {
+            val dao = ExcelLogDatabase.getDatabase(context).getDao()
+            dao.insert(excelLog)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 
-    private fun insert(context: Context, excelLog: ExcelLog) {
+    private fun saveToExcel(context: Context, excelLog: ExcelLog): Boolean {
         val date = excelLog.getDate()
-        val workbook = ExcelManager.getInstance().openFile(context, date) ?: return
-        when (order) {
-            Order.DESC -> {
-                ExcelManager.getInstance().insert(workbook, excelLog.getCells(), maxRowsPerSheet)
-            }
-            Order.ASC -> {
-                ExcelManager.getInstance().add(workbook, excelLog.getCells(), maxRowsPerSheet)
-            }
-        }
+        val workbook = ExcelManager.getInstance().openFile(context, date) ?: return false
+        return ExcelManager.getInstance().writeRow(workbook, excelLog.getCells(), order, maxRowsPerSheet)
     }
 
     private val logs = ArrayList<ExcelLog>()
@@ -144,12 +144,45 @@ object XlsLog {
                 saveLog(context)
             }
 
-            ExcelManager.getInstance().saveFile()
+            ExcelManager.getInstance().saveAllFilesAndClose()
         }
         return true
     }
 
     fun stop() {
         isRunning = false
+    }
+
+    interface ExportListener {
+        /**
+         * first: fileName
+         * second: folderName
+         */
+        fun onDataRead(excelLog: ExcelLog, left: Int): Pair<String?, String?>
+        fun onDataWrite(cells: List<String>, filePath: String)
+        fun onFinish()
+    }
+    /**
+     * 从数据库导出到Excel
+     */
+    fun exportToExcel(context: Context, listener: ExportListener? = null) {
+        runThread {
+            val dao = ExcelLogDatabase.getDatabase(context).getDao()
+            var excelLog = dao.queryFirst()
+            while (excelLog != null) {
+                val count = dao.count()
+                val pair = listener?.onDataRead(excelLog, count)
+                val fileName = pair?.first ?: excelLog.getDate()
+                val folderName = pair?.second ?: ExcelManager.FOLDER_NAME
+                val workbook = ExcelManager.getInstance().openFile(context, fileName, folderName) ?: return@runThread
+                ExcelManager.getInstance().writeRow(workbook, excelLog.getCells(), order, maxRowsPerSheet)
+                val filePath = WriteExcelUtils.save(workbook, true)
+                listener?.onDataWrite(excelLog.getCells(), filePath)
+
+                dao.delete(excelLog)
+                excelLog = dao.queryFirst()
+            }
+            listener?.onFinish()
+        }
     }
 }

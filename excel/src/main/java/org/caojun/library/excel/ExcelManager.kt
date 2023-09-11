@@ -23,7 +23,7 @@ class ExcelManager {
             return excelManager!!
         }
 
-        private const val FOLDER_NAME = "XLSX"
+        const val FOLDER_NAME = "XLSX"
         private const val EXTENSION_NAME = "xlsx"
     }
 
@@ -52,20 +52,35 @@ class ExcelManager {
         return WriteExcelUtils.writeRow(row, cells)
     }
 
-    fun insert(workbook: XSSFWorkbook, cells: List<String>, maxRowsPerSheet: Int): Boolean {
+    private fun insert(workbook: XSSFWorkbook, cells: List<String>, maxRowsPerSheet: Int): Boolean {
         val sheet = getSheet(workbook, Order.DESC, maxRowsPerSheet) ?: return false
         return writeRow(sheet, cells, 0)
     }
 
-    fun add(workbook: XSSFWorkbook, cells: List<String>, maxRowsPerSheet: Int): Boolean {
+    private fun add(workbook: XSSFWorkbook, cells: List<String>, maxRowsPerSheet: Int): Boolean {
         val sheet = getSheet(workbook, Order.ASC, maxRowsPerSheet) ?: return false
         return writeRow(sheet, cells, ReadExcelUtils.getNumberOfRows(sheet))
     }
 
-    fun saveFile() {
+    fun writeRow(workbook: XSSFWorkbook, cells: List<String>, order: Order, maxRowsPerSheet: Int): Boolean {
+        return when (order) {
+            Order.DESC -> {
+                insert(workbook, cells, maxRowsPerSheet)
+            }
+            Order.ASC -> {
+                add(workbook, cells, maxRowsPerSheet)
+            }
+        }
+    }
+
+    fun saveAllFilesAndClose() {
         val workbooks = ReadExcelUtils.getWorkbooks()
         for (workbook in workbooks) {
-            WriteExcelUtils.save(workbook)
+            WriteExcelUtils.save(workbook, true)
         }
+    }
+
+    fun save(workbook: XSSFWorkbook) {
+        WriteExcelUtils.save(workbook, true)
     }
 }

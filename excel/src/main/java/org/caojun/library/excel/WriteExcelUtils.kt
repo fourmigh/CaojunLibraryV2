@@ -7,14 +7,19 @@ import java.io.FileOutputStream
 
 object WriteExcelUtils {
 
-    fun save(workbook: XSSFWorkbook): Boolean {
+    fun save(workbook: XSSFWorkbook, close: Boolean = false): String {
         return try {
-            val filePath = ReadExcelUtils.getFilePath(workbook) ?: return false
+            val filePath = ReadExcelUtils.getFilePath(workbook) ?: return ""
             val fos = FileOutputStream(filePath)
             workbook.write(fos)
-            true
+            if (close) {
+                workbook.close()
+                fos.close()
+                ReadExcelUtils.refresh(workbook)
+            }
+            filePath
         } catch (e: Exception) {
-            false
+            ""
         }
     }
 

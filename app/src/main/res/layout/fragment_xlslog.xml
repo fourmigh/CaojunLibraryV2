@@ -10,6 +10,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <RadioGroup
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbASC"
+            android:text="ASC"
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <RadioButton
+            android:id="@+id/rbDESC"
+            android:text="DESC"
+            android:checked="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RadioGroup>
+
     <Button
         android:id="@+id/btnOpenExcel"
         android:text="Open"
@@ -25,6 +45,12 @@
     <Button
         android:id="@+id/btnLogStop"
         android:text="Stop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnLogExport"
+        android:text="Export"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

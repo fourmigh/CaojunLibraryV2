@@ -11,6 +11,8 @@ import org.caojun.library.excel.ExcelManager
 import org.caojun.library.excel.enums.SaveType
 import org.caojun.library.excel.XlsLog
 import org.caojun.library.excel.enums.Order
+import org.caojun.library.excel.room.ExcelLog
+import org.caojun.library.klog.KLog
 import org.caojun.library.kotlin.runThread
 import org.caojun.library.kotlin.runUiThread
 import org.caojun.library.v2.databinding.FragmentXlslogBinding
@@ -32,7 +34,7 @@ class XlsLogFragment : Fragment() {
         val context = requireContext()
 
         binding.btnLogStart.setOnClickListener {
-            XlsLog.init(SaveType.XLSX, Order.DESC, 100)
+            XlsLog.init(SaveType.ROOM, getOrder(), 100)
             XlsLog.start(this.requireActivity().applicationContext)
             start()
         }
@@ -57,12 +59,44 @@ class XlsLogFragment : Fragment() {
             }
         }
 
+        binding.btnLogExport.setOnClickListener {
+            binding.btnLogExport.isEnabled = false
+            XlsLog.init(SaveType.ROOM, getOrder(), 500)
+            XlsLog.exportToExcel(context, object : XlsLog.ExportListener {
+                override fun onDataRead(excelLog: ExcelLog, count: Int): Pair<String?, String?> {
+                    KLog.i("XlsLog.ExportListener", "onDataRead[$count]: ${excelLog.getCells()}")
+                    return Pair(excelLog.getDate(), null)
+                }
+
+                override fun onDataWrite(cells: List<String>, filePath: String) {
+                    KLog.i("XlsLog.ExportListener", "onDataWrite: $filePath")
+                }
+
+                override fun onFinish() {
+                    KLog.i("XlsLog.ExportListener", "onFinish")
+                    runUiThread {
+                        binding.btnLogExport.isEnabled = true
+                    }
+                }
+            })
+        }
+
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun getOrder(): Order {
+        if (binding.rbASC.isChecked) {
+            return Order.ASC
+        }
+        if (binding.rbDESC.isChecked) {
+            return Order.DESC
+        }
+        return Order.DESC
     }
 
     private var isRunning = false

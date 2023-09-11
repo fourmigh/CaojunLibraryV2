@@ -40,11 +40,15 @@ object FileUtils {
      */
     @JvmStatic
     fun getSaveFile(type: String, folderName: String, fileName: String): File? {
-        val file = getFile(type, folderName, fileName) ?: return null
-        if (!file.exists()) {
-            file.createNewFile()
+        return try {
+            val file = getFile(type, folderName, fileName) ?: return null
+            if (!file.exists()) {
+                file.createNewFile()
+            }
+            file
+        } catch (e: Exception) {
+            null
         }
-        return file
     }
     fun getFile(type: String, folderName: String, fileName: String): File? {
         val storePath = getFolder(type, folderName) ?: return null

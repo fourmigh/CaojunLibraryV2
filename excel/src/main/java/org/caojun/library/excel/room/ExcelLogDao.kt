@@ -19,4 +19,7 @@ interface ExcelLogDao {
 
     @Update
     fun update(vararg excelLog: ExcelLog)
+
+    @Query("SELECT COUNT(*) FROM ExcelLog")
+    fun count(): Int
 }
