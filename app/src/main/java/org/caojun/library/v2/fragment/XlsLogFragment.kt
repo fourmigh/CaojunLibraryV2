@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import org.caojun.library.excel.ExcelManager
+import org.caojun.library.excel.SaveType
 import org.caojun.library.excel.XlsLog
 import org.caojun.library.kotlin.runThread
 import org.caojun.library.kotlin.runUiThread
@@ -30,6 +31,7 @@ class XlsLogFragment : Fragment() {
         val context = requireContext()
 
         binding.btnLogStart.setOnClickListener {
+            XlsLog.init(SaveType.XLSX)
             XlsLog.start(this.requireActivity().applicationContext)
             start()
         }

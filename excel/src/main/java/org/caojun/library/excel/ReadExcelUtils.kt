@@ -123,4 +123,8 @@ object ReadExcelUtils {
         }
         return row.getCell(indexCell)
     }
+
+    fun getWorkbooks(): MutableCollection<XSSFWorkbook> {
+        return hmWorkbook.values
+    }
 }

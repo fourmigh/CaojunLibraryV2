@@ -18,12 +18,13 @@ object WriteExcelUtils {
         }
     }
 
-    fun shiftRows(sheet: XSSFSheet, startRow: Int, n: Int = 1): Boolean {
-        if (startRow >= sheet.lastRowNum) {
+    fun shiftRows(sheet: XSSFSheet, startRow: Int = 0, n: Int = 1): Boolean {
+        val endRow = sheet.lastRowNum + 1
+        if (startRow >= endRow) {
             return true
         }
         return try {
-            sheet.shiftRows(startRow, sheet.lastRowNum, n)
+            sheet.shiftRows(startRow, endRow, n)
             true
         } catch (e: Exception) {
             false

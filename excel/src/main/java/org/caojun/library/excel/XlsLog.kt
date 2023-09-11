@@ -10,6 +10,12 @@ import org.caojun.library.kotlin.runThread
 
 object XlsLog {
 
+    private var saveType = SaveType.ROOM
+
+    fun init(saveType: SaveType) {
+        XlsLog.saveType = saveType
+    }
+
     fun v(tag: String, log: String) {
         addLog(LogType.V, tag, log)
         KLog.v(tag, log)
@@ -85,14 +91,31 @@ object XlsLog {
     private fun doSaveLog(context: Context) {
         try {
             val excelLog = logs[0]
-            val dao = ExcelLogDatabase.getDatabase(context).getDao()
-            dao.insert(excelLog)
+            when (saveType) {
+                SaveType.ROOM -> {
+                    saveToDatabase(context, excelLog)
+                }
+                SaveType.XLSX -> {
+                    saveToFile(context, excelLog)
+                }
+            }
             logs.removeAt(0)
             KLog.i("XlsLog", "saveLog.excelLog: ${excelLog.getCells()}")
             KLog.d("XlsLog", "saveLog.left: ${logs.size}")
         } catch (e: Exception) {
             KLog.e("XlsLog", "saveLog: $e")
         }
+    }
+
+    private fun saveToDatabase(context: Context, excelLog: ExcelLog) {
+        val dao = ExcelLogDatabase.getDatabase(context).getDao()
+        dao.insert(excelLog)
+    }
+
+    private fun saveToFile(context: Context, excelLog: ExcelLog) {
+        val date = excelLog.getDate()
+        val workbook = ExcelManager.getInstance().openFile(context, date) ?: return
+        ExcelManager.getInstance().insert(workbook, excelLog.getCells())
     }
 
     private val logs = ArrayList<ExcelLog>()
@@ -107,6 +130,8 @@ object XlsLog {
             while (isRunning || logs.isNotEmpty()) {
                 saveLog(context)
             }
+
+            ExcelManager.getInstance().saveFile()
         }
         return true
     }
