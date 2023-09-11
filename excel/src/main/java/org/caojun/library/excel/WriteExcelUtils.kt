@@ -18,6 +18,10 @@ object WriteExcelUtils {
         }
     }
 
+    fun createSheet(workbook: XSSFWorkbook): XSSFSheet {
+        return workbook.createSheet()
+    }
+
     fun shiftRows(sheet: XSSFSheet, startRow: Int = 0, n: Int = 1): Boolean {
         val endRow = sheet.lastRowNum + 1
         if (startRow >= endRow) {

@@ -2,6 +2,8 @@ package org.caojun.library.excel
 
 import android.content.Context
 import android.os.SystemClock
+import org.caojun.library.excel.enums.Order
+import org.caojun.library.excel.enums.SaveType
 import org.caojun.library.excel.room.ExcelLog
 import org.caojun.library.excel.room.ExcelLogDatabase
 import org.caojun.library.excel.room.LogType
@@ -11,9 +13,13 @@ import org.caojun.library.kotlin.runThread
 object XlsLog {
 
     private var saveType = SaveType.ROOM
+    private var order = Order.DESC
+    private var maxRowsPerSheet = 1000
 
-    fun init(saveType: SaveType) {
+    fun init(saveType: SaveType, order: Order = Order.DESC, maxRowsPerSheet: Int = 1000) {
         XlsLog.saveType = saveType
+        XlsLog.order = order
+        XlsLog.maxRowsPerSheet = maxRowsPerSheet
     }
 
     fun v(tag: String, log: String) {
@@ -96,7 +102,7 @@ object XlsLog {
                     saveToDatabase(context, excelLog)
                 }
                 SaveType.XLSX -> {
-                    saveToFile(context, excelLog)
+                    insert(context, excelLog)
                 }
             }
             logs.removeAt(0)
@@ -112,10 +118,17 @@ object XlsLog {
         dao.insert(excelLog)
     }
 
-    private fun saveToFile(context: Context, excelLog: ExcelLog) {
+    private fun insert(context: Context, excelLog: ExcelLog) {
         val date = excelLog.getDate()
         val workbook = ExcelManager.getInstance().openFile(context, date) ?: return
-        ExcelManager.getInstance().insert(workbook, excelLog.getCells())
+        when (order) {
+            Order.DESC -> {
+                ExcelManager.getInstance().insert(workbook, excelLog.getCells(), maxRowsPerSheet)
+            }
+            Order.ASC -> {
+                ExcelManager.getInstance().add(workbook, excelLog.getCells(), maxRowsPerSheet)
+            }
+        }
     }
 
     private val logs = ArrayList<ExcelLog>()

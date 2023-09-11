@@ -34,12 +34,13 @@ object ReadExcelUtils {
             return try {
                 val file = File(filePath)
                 val workbook = XSSFWorkbook()
-                val sheet = workbook.createSheet()
-                val row = sheet.createRow(0)
-                val cell = row.createCell(0)
-                cell.setCellValue("")
+                workbook.createSheet()
+//                val sheet = workbook.createSheet()
+//                val row = sheet.createRow(0)
+//                val cell = row.createCell(0)
+//                cell.setCellValue("")
                 FileOutputStream(file).use { fos ->
-                    workbook.write(fos) // 写入Excel文件
+                    workbook.write(fos)
                 }
                 workbook.close()
                 readWorkbook(filePath)
@@ -71,8 +72,7 @@ object ReadExcelUtils {
         return null
     }
 
-    fun getNumberOfSheets(filePath: String): Int {
-        val workbook = getWorkbook(filePath) ?: return 0
+    fun getNumberOfSheets(workbook: XSSFWorkbook): Int {
         return workbook.numberOfSheets
     }
 
